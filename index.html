@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Game Store - Ultimate PC Gaming Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ========== Base Styles ========== */
+        :root {
+            --primary: #2a2a72;
+            --secondary: #009ffd;
+            --accent: #ff3f81;
+            --dark: #0a0a2e;
+            --light: #f8f9ff;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ========== Particle Background ========== */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* ========== Navigation ========== */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem;
+            background: rgba(10, 10, 46, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* ========== Page Sections ========== */
+        .page {
+            display: none;
+            padding: 100px 2rem 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .active-page {
+            display: block;
+        }
+
+        /* ========== Home Page ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        /* ========== Games Page ========== */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        /* ========== Cart Page ========== */
+        .cart-items {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .remove-btn {
+            color: var(--accent);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* ========== Payment Page ========== */
+        .payment-methods {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .payment-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== Responsive Design ========== */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .game-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <div class="logo">Premium Game Store</div>
+        <div class="nav-links">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#games" class="nav-link">Games</a>
+            <a href="#cart" class="nav-link">Cart</a>
+            <a href="#payment" class="nav-link">Payment</a>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home" class="page active-page">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Welcome to Premium Game Store</h1>
+                <p>Your Ultimate Destination for Premium PC Gaming</p>
+                <button onclick="showPage('games')">Browse Games</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Page -->
+    <section id="games" class="page">
+        <h2>Premium Game Collection</h2>
+        <div class="games-grid" id="gamesContainer"></div>
+    </section>
+
+    <!-- Cart Page -->
+    <section id="cart" class="page">
+        <h2><i class="fas fa-shopping-cart"></i> Your Cart</h2>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-total">
+            <h3>Total: <span id="totalAmount">0</span> LKR</h3>
+            <button onclick="showPage('payment')">Proceed to Payment</button>
+        </div>
+    </section>
+
+    <!-- Payment Page -->
+    <section id="payment" class="page">
+        <div class="payment-methods">
+            <h2><i class="fas fa-wallet"></i> Payment Methods</h2>
+            <div class="payment-card">
+                <h3><i class="fas fa-mobile-alt"></i> EZ Cash</h3>
+                <p>076 233 2738</p>
+            </div>
+            <div class="payment-card">
+                <h3><i class="fas fa-university"></i> Bank Transfer</h3>
+                <p>Bank of Ceylon (Nattandiya Branch)</p>
+                <p>Account Name: Harith Jayasanka</p>
+                <p>Account Number: 931310045</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particle.js Initialization
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80 },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5 },
+                size: { value: 3 },
+                move: { enable: true, speed: 2 }
+            }
+        });
+
+        // Game Data with Descriptions
+        const games = [
+            {
+                name: "Grand Theft Auto V",
+                image: "gta5.jpg",
+                price: 500,
+                description: "Experience the ultimate open-world adventure in Los Santos"
+            },
+            {
+                name: "Red Dead Redemption 2",
+                image: "rdr2.jpg",
+                price: 500,
+                description: "Epic Wild West action in a stunning open world"
+            },
+            {
+                name: "A Way Out",
+                image: "a-way-out.jpg",
+                price: 500,
+                description: "A unique co-op only adventure following two prisoners working together to escape prison and stay on the run from authorities."
+            },
+            {
+                name: "Days Gone",
+                image: "days-gone.jpg",
+                price: 500,
+                description: "Survive in a post-apocalyptic open world overrun by Freakers. Ride your motorcycle through dynamic weather and day/night cycles."
+            },
+            {
+                name: "Detroit: Become Human",
+                image: "detroit.jpg",
+                price: 500,
+                description: "Shape an ambitious branching narrative where your decisions dramatically alter the story. Experience the android revolution."
+            },
+            {
+                name: "Ghost of Tsushima",
+                image: "ghost.jpg",
+                price: 500,
+                description: "Become Jin Sakai, a samurai warrior fighting to protect Tsushima Island during the first Mongol invasion of Japan."
+            },
+            {
+                name: "Black Myth Wukong",
+                image: "wukong.jpg",
+                price: 500,
+                description: "Action RPG based on Journey to the West. Play as the Destined One to uncover dark secrets from the past."
+            },
+            {
+                name: "Spider-Man 2",
+                image: "spiderman2.jpg",
+                price: 500,
+                description: "Swing through New York as both Peter Parker and Miles Morales in this epic superhero adventure."
+            },
+            {
+                name: "It Takes Two",
+                image: "ittakestwo.jpg",
+                price: 500,
+                description: "Embark on a genre-bending platform adventure built purely for two-player co-op."
+            },
+            {
+                name: "Battlefield V",
+                image: "bfv.jpg",
+                price: 500,
+                description: "Experience all-out multiplayer warfare with the iconic Battlefield gameplay in WWII settings."
+            },
+            {
+                name: "Battlefield 1",
+                image: "bf1.jpg",
+                price: 500,
+                description: "Return to the dawn of all-out warfare in this intense WWI first-person shooter."
+            },
+            {
+                name: "Uncharted: Legacy of Thieves",
+                image: "uncharted.jpg",
+                price: 500,
+                description: "Join Nathan Drake and Chloe Frazer in their globe-trotting adventures to recover legendary treasure."
+            },
+            {
+                name: "Need for Speed Heat",
+                image: "nfs-heat.jpg",
+                price: 500,
+                description: "Race by day and risk it all at night in this adrenaline-fueled street racing experience."
+            },
+            {
+                name: "Mortal Kombat 11",
+                image: "mk11.jpg",
+                price: 500,
+                description: "The ultimate fighting experience with brutal combos, fatalities, and an all-new story campaign."
+            }
+        ];
+
+        // Cart System
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        const updateCart = () => {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        };
+
+        const renderCart = () => {
+            const cartItems = document.getElementById('cartItems');
+            const totalElement = document.getElementById('totalAmount');
+            
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div>
+                        <h4>${item.name}</h4>
+                        <p>${item.price} LKR</p>
+                    </div>
+                    <i class="fas fa-trash remove-btn" onclick="removeFromCart(${index})"></i>
+                `;
+                cartItems.appendChild(div);
+            });
+
+            totalElement.textContent = total;
+        };
+
+        // Game Initialization
+        const gamesContainer = document.getElementById('gamesContainer');
+        games.forEach(game => {
+            const card = document.createElement('div');
+            card.className = 'game-card';
+            card.innerHTML = `
+                <img src="images/${game.image}" class="game-image" alt="${game.name}">
+                <h3>${game.name}</h3>
+                <p>${game.description}</p>
+                <p class="price">${game.price} LKR</p>
+                <button onclick="addToCart('${game.name}', ${game.price})">Add to Cart</button>
+            `;
+            gamesContainer.appendChild(card);
+        });
+
+        // Cart Functions
+        const addToCart = (name, price) => {
+            cart.push({ name, price });
+            updateCart();
+            alert(`Added ${name} to cart!`);
+        };
+
+        const removeFromCart = (index) => {
+            cart.splice(index, 1);
+            updateCart();
+        };
+
+        // Navigation
+        const showPage = (pageId) => {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            document.getElementById(pageId).classList.add('active-page');
+            window.scrollTo(0, 0);
+        };
+
+        // Event Listeners
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage(link.getAttribute('href').substring(1));
+            });
+        });
+
+        // Initial Setup
+        renderCart();
+    </script>
+</body>
+</html>
